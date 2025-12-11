@@ -1,37 +1,49 @@
-%define		qtver		5.3.1
+%define		qtver		6.6.0
 
-Summary:	libfm-qt
+Summary:	Companion library for PCManFM
+Summary(pl.UTF-8):	Biblioteka towarzysząca dla PCManFM
 Name:		libfm-qt
-Version:	0.11.1
+Version:	2.3.0
 Release:	1
 License:	GPLv2 and LGPL-2.1+
 Group:		X11/Libraries
-Source0:	http://downloads.lxqt.org/libfm-qt/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	ebff48dbcec7169cdac2a81a79c050db
+Source0:	https://github.com/lxqt/libfm-qt/releases/download/%{version}/%{name}-%{version}.tar.xz
+# Source0-md5:	d51de358b739c17a0d35e889aeb126b0
 URL:		http://www.lxqt.org/
-BuildRequires:	Qt5Core-devel >= %{qtver}
-BuildRequires:	Qt5DBus-devel >= %{qtver}
-BuildRequires:	Qt5Gui-devel >= %{qtver}
-BuildRequires:	Qt5Widgets-devel >= %{qtver}
-BuildRequires:	Qt5Xml-devel >= %{qtver}
-BuildRequires:	cmake >= 2.8.3
-BuildRequires:	libfm-devel >= 1.2.0
-BuildRequires:	qt5-build >= %{qtver}
-BuildRequires:	qt5-linguist >= %{qtver}
+BuildRequires:	Qt6Core-devel >= %{qtver}
+BuildRequires:	Qt6Gui-devel >= %{qtver}
+BuildRequires:	Qt6Widgets-devel >= %{qtver}
+BuildRequires:	cmake >= 3.18.0
+BuildRequires:	glib2-devel >= 1:2.50.0
+BuildRequires:	libexif-devel
+BuildRequires:	libglvnd-libGL-devel
+BuildRequires:	menu-cache-devel >= 1.1.0
+BuildRequires:	qt6-build >= %{qtver}
+BuildRequires:	qt6-linguist >= %{qtver}
+BuildRequires:	xcb-util-cursor-devel
+BuildRequires:	xcb-util-devel
+BuildRequires:	xcb-util-keysyms-devel
+BuildRequires:	xcb-util-renderutil-devel
+BuildRequires:	xcb-util-wm-devel
+BuildRequires:	xorg-lib-libxkbcommon-devel >= 0.9.0
 BuildRequires:	xz-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-libfm-qt.
+Libfm-Qt is a companion library providing components to build desktop
+file managers.
+
+%description -l pl.UTF-8
+Libfm-Qt to biblioteka towarzysząca, która udostępnia komponenty do
+tworzenia menedżerów plików.
 
 %package devel
 Summary:	libfm-qt - header files and development documentation
 Summary(pl.UTF-8):	libfm-qt - pliki nagłówkowe i dokumentacja do kdelibs
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	Qt5Core-devel >= %{qtver}
-Requires:	Qt5Gui-devel >= %{qtver}
-Requires:	Qt5Xml-devel >= %{qtver}
+Requires:	Qt6Core-devel >= %{qtver}
+Requires:	Qt6Gui-devel >= %{qtver}
 Obsoletes:	razor-qt-devel
 
 %description devel
@@ -40,19 +52,15 @@ libfm-qt.
 
 %description devel -l pl.UTF-8
 Pakiet ten zawiera pliki nagłówkowe i dokumentację potrzebną przy
-pisaniu własnych programów wykorzystujących fm-qt.
+pisaniu własnych programów wykorzystujących libfm-qt.
 
 %prep
 %setup -q
 
 %build
-install -d build
-cd build
-%cmake \
-	-DPULL_TRANSLATIONS:BOOL=OFF \
-	../
+%cmake -B build
 
-%{__make}
+%{__make} -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -60,20 +68,28 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -C build install \
     DESTDIR=$RPM_BUILD_ROOT
 
+%find_lang %{name} --with-qm
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
-%ghost %{_libdir}/libfm-qt.so.3
-%attr(755,root,root) %{_libdir}/libfm-qt.so.3.*.*
+%ghost %{_libdir}/libfm-qt6.so.17
+%{_libdir}/libfm-qt6.so.17.*.*
+%{_datadir}/mime/packages/libfm-qt6-mimetypes.xml
+%dir %{_datadir}/libfm-qt6
+# required for the lang files
+%dir %{_datadir}/libfm-qt6/translations
+%{_datadir}/libfm-qt6/archivers.list
+%{_datadir}/libfm-qt6/terminals.list
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/libfm-qt
-%attr(755,root,root) %{_libdir}/libfm-qt.so
-%{_pkgconfigdir}/libfm-qt.pc
-%{_datadir}/cmake/fm-qt
+%{_includedir}/libfm-qt6
+%{_libdir}/libfm-qt6.so
+%{_pkgconfigdir}/libfm-qt6.pc
+%{_datadir}/cmake/fm-qt6
