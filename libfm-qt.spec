@@ -17,6 +17,7 @@ BuildRequires:	cmake >= 3.18.0
 BuildRequires:	glib2-devel >= 1:2.50.0
 BuildRequires:	libexif-devel
 BuildRequires:	libglvnd-libGL-devel
+BuildRequires:	lxqt-menu-data >= 2.3.0
 BuildRequires:	menu-cache-devel >= 1.1.0
 BuildRequires:	qt6-build >= %{qtver}
 BuildRequires:	qt6-linguist >= %{qtver}
