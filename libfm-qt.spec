@@ -3,12 +3,12 @@
 Summary:	Companion library for PCManFM
 Summary(pl.UTF-8):	Biblioteka towarzysząca dla PCManFM
 Name:		libfm-qt
-Version:	2.3.0
+Version:	2.3.1
 Release:	1
 License:	GPLv2 and LGPL-2.1+
 Group:		X11/Libraries
 Source0:	https://github.com/lxqt/libfm-qt/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	d51de358b739c17a0d35e889aeb126b0
+# Source0-md5:	c651c1bc1b7bc68e41490ff9cf2126cc
 URL:		http://www.lxqt.org/
 BuildRequires:	Qt6Core-devel >= %{qtver}
 BuildRequires:	Qt6Gui-devel >= %{qtver}
