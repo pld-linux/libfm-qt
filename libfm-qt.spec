@@ -3,12 +3,12 @@
 Summary:	Companion library for PCManFM
 Summary(pl.UTF-8):	Biblioteka towarzysząca dla PCManFM
 Name:		libfm-qt
-Version:	2.4.0
+Version:	2.5.0
 Release:	1
 License:	GPLv2 and LGPL-2.1+
 Group:		X11/Libraries
 Source0:	https://github.com/lxqt/libfm-qt/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	d836e9732df22a1fc8a5b3d3919f4549
+# Source0-md5:	4fe2b2f4ea3428faf6b2b4ffe0e4bad8
 URL:		http://www.lxqt.org/
 BuildRequires:	Qt6Core-devel >= %{qtver}
 BuildRequires:	Qt6Gui-devel >= %{qtver}
@@ -17,7 +17,7 @@ BuildRequires:	cmake >= 3.18.0
 BuildRequires:	glib2-devel >= 1:2.50.0
 BuildRequires:	libexif-devel
 BuildRequires:	libglvnd-libGL-devel
-BuildRequires:	lxqt-menu-data >= 2.4.0
+BuildRequires:	lxqt-menu-data >= 2.5.0
 BuildRequires:	menu-cache-devel >= 1.1.0
 BuildRequires:	qt6-build >= %{qtver}
 BuildRequires:	qt6-linguist >= %{qtver}
@@ -79,8 +79,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%ghost %{_libdir}/libfm-qt6.so.17
-%{_libdir}/libfm-qt6.so.17.*.*
+%ghost %{_libdir}/libfm-qt6.so.18
+%{_libdir}/libfm-qt6.so.18.*.*
 %{_datadir}/mime/packages/libfm-qt6-mimetypes.xml
 %dir %{_datadir}/libfm-qt6
 # required for the lang files
